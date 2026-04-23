@@ -113,6 +113,9 @@ namespace RenderMod.Render
 
                 Process.Start("explorer.exe", $"/select,\"{finalMp4}\"");
                 DingPlayer.shouldPlayDing = true;
+                //deleting temp files
+                File.Delete(latestVideoFile);
+                File.Delete(latestAudioFile);
             }
             catch (Exception ex)
             {
@@ -155,7 +158,17 @@ namespace RenderMod.Render
                     {
                         _log.Notice("Exiting gameplay scene, starting audio capture in 2 seconds");
                         // leaving gameplay (render end)
-                        Task.Delay(2000).ContinueWith(t => StartAudioCapture());
+                        var codec = ReplayRenderSettings.VideoCodec;
+                        if (codec == "av1") //have to delay audio capture a bit more when using av1, ffmpeg takes longer to finish doing its av1 shit
+                        {
+                            _log.Notice("AV1 detected, waiting 20 seconds longer"); //20 seconds longer is fine imo, especially if software encoder is in use
+                            Task.Delay(22000).ContinueWith(t => StartAudioCapture());
+                        }
+                        else
+                        {
+                            Task.Delay(2000).ContinueWith(t => StartAudioCapture());
+                        }
+                        
                     }
                     break;
                 case RenderState.Audio:
