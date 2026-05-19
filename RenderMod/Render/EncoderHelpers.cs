@@ -1,6 +1,8 @@
+using System;
 using IPA.Utilities;
 using System.Diagnostics;
 using System.IO;
+using Debug = UnityEngine.Debug;
 
 namespace RenderMod.Render
 {
@@ -15,6 +17,7 @@ namespace RenderMod.Render
 
             if (ReplayRenderSettings.VideoCodec == "hevc")
             {
+                Debug.LogError("we are using HEVC");
                 if (IsEncoderUsable("hevc_nvenc", encodersOutput))
                     return "hevc_nvenc";
 
@@ -23,12 +26,14 @@ namespace RenderMod.Render
 
                 if (IsEncoderUsable("hevc_qsv", encodersOutput))
                     return "hevc_qsv";
-
+                
+                Debug.LogError("all encoders failed, falling back to software encoder");
                 return "libx265";
             }
             
             if (ReplayRenderSettings.VideoCodec == "av1")
             {
+                Debug.LogError("we are using AV1");
                 if (IsEncoderUsable("av1_nvenc", encodersOutput))
                     return "av1_nvenc";
 
@@ -38,8 +43,10 @@ namespace RenderMod.Render
                 if (IsEncoderUsable("av1_qsv", encodersOutput))
                     return "av1_qsv";
                 
+                Debug.LogError("all encoders failed, falling back to software encoder");
                 return "libaom-av1";
             }
+            Debug.LogError("we are using H.264");
             if (IsEncoderUsable("h264_nvenc", encodersOutput))
                 return "h264_nvenc";
 
@@ -48,7 +55,8 @@ namespace RenderMod.Render
 
             if (IsEncoderUsable("h264_qsv", encodersOutput))
                 return "h264_qsv";
-
+            
+            Debug.LogError("all encoders failed, falling back to software encoder");
             return "libx264";
         }
 
@@ -77,12 +85,15 @@ namespace RenderMod.Render
                 return string.Empty;
             }
         }
-
+        
         private static bool IsEncoderUsable(string encoder, string encodersOutput)
         {
             if (!encodersOutput.Contains(encoder))
+            {
+                Debug.LogError($"{encoder} is unavailable!");
                 return false;
-
+            }
+            Debug.LogError($"trying {encoder}");
             return TestEncoder(encoder);
         }
 
@@ -95,7 +106,7 @@ namespace RenderMod.Render
                 proc.StartInfo.Arguments =
                     $"-hide_banner -loglevel error " +
                     $"-f lavfi -i testsrc=size=1280x720:rate=30 " +
-                    $"-c:v {encoder} -t 1 -f null -";
+                    $"-vf format=yuv420p -c:v {encoder} -t 1 -f null -";
 
                 proc.StartInfo.RedirectStandardError = true;
                 proc.StartInfo.UseShellExecute = false;
@@ -130,7 +141,11 @@ namespace RenderMod.Render
             switch (ReplayRenderSettings.Preset)
             {
                 case QualityPreset.Low:
-                    if (encoder.Contains("nvenc"))
+                    if (encoder.Contains("av1_nvenc"))
+                    {
+                        presetArgs = $"-preset fast -rc vbr {bitrateArg}";
+                    }
+                    else if (encoder.Contains("nvenc"))
                     {
                         presetArgs = $"-preset fast -rc vbr_hq -cq 28 {bitrateArg}";
                     }
@@ -153,7 +168,11 @@ namespace RenderMod.Render
                     break;
 
                 case QualityPreset.Medium:
-                    if (encoder.Contains("nvenc"))
+                    if (encoder.Contains("av1_nvenc"))
+                    {
+                        presetArgs = $"-preset medium -rc vbr {bitrateArg}";
+                    }
+                    else if (encoder.Contains("nvenc"))
                     {
                         presetArgs = $"-preset medium -rc vbr_hq -cq 23 {bitrateArg}";
                     }
@@ -176,7 +195,11 @@ namespace RenderMod.Render
                     break;
 
                 case QualityPreset.High:
-                    if (encoder.Contains("nvenc"))
+                    if (encoder.Contains("av1_nvenc"))
+                    {
+                        presetArgs = $"-preset slow -rc vbr -tune hq {bitrateArg}";
+                    }
+                    else if (encoder.Contains("nvenc"))
                     {
                         presetArgs = $"-preset slow -rc vbr_hq -cq 18 {bitrateArg}";
                     }
