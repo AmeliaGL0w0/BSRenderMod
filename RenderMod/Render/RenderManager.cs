@@ -111,7 +111,7 @@ namespace RenderMod.Render
                 
                 _log.Notice($"Muxing audio and video into a final mp4 file...");
                 FFmpegPipe.AddAudioToMp4(tempVideoMp4, latestAudioFile, finalMp4, ReplayRenderSettings.AudioBitrateKbps);
-                _log.Notice($"Final muxed MP4 created: {finalMp4}");//f
+                _log.Notice($"Final muxed MP4 created: {finalMp4}");
 
                 Process.Start("explorer.exe", $"/select,\"{finalMp4}\"");
                 DingPlayer.shouldPlayDing = true;
@@ -159,8 +159,6 @@ namespace RenderMod.Render
                     
                     if (scene2.name.ToLower() != "gamecore")
                     {
-                        var ffm = new Process();
-                        ffm.WaitForExit();
                         _log.Notice("Exiting gameplay scene, starting audio capture in 2 seconds");
                         // leaving gameplay (render end)
                         var codec = ReplayRenderSettings.VideoCodec;
