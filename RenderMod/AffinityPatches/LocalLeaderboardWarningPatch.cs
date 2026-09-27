@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using HMUI;
 using IPA.Utilities;
 using RenderMod.Render;
@@ -9,9 +9,9 @@ using UnityEngine;
 
 namespace RenderMod.AffinityPatches
 {
-    // ScoreSaber.UI.Elements.Leaderboard.ScoreDetailView.StartReplay
+    // LocalLeaderboard.UI.ScoreInfoModal.silly
     [HarmonyPatch]
-    internal class ScoreSaberWarningPatch
+    internal class LocalLeaderboardWarningPatch
     {
         public static bool shouldNotInterfere = false;
 
@@ -21,16 +21,14 @@ namespace RenderMod.AffinityPatches
         public static MethodBase TargetMethod()
         {
             var asm = AppDomain.CurrentDomain.GetAssemblies()
-                .FirstOrDefault(a => a.GetName().Name == "ScoreSaber");
+                .FirstOrDefault(a => a.GetName().Name == "LocalLeaderboard");
             if (asm == null) return null;
 
-
-            var type = asm.GetType("ScoreSaber.UI.Elements.Leaderboard.ScoreDetailView");
+            var type = asm.GetType("LocalLeaderboard.UI.ScoreInfoModal");
             if (type == null) return null;
-
             return AccessTools.Method(
                 type,
-                "StartReplay");
+                "replayStart");
         }
 
         [HarmonyPrefix]
@@ -54,10 +52,10 @@ namespace RenderMod.AffinityPatches
                 () =>
                 {
                     shouldNotInterfere = true;
-                    RenderManager.StartVideoRender("ScoreSaber");
+                    RenderManager.StartVideoRender("LocalLeaderboard");
                 },
                 "Render Mod",
-                $"About to render a ScoreSaber Replay\n" +
+                $"About to render a LocalLeaderboard Replay\n" +
                 $"\nContinue?"
             );
 
@@ -122,12 +120,12 @@ namespace RenderMod.AffinityPatches
             {
                 try
                 {
-                    harmony.Patch(TargetMethod(), prefix: new HarmonyMethod(typeof(ScoreSaberWarningPatch).GetMethod(nameof(Prefix), BindingFlags.Static | BindingFlags.Public)));
+                    harmony.Patch(TargetMethod(), prefix: new HarmonyMethod(typeof(LocalLeaderboardWarningPatch).GetMethod(nameof(Prefix), BindingFlags.Static | BindingFlags.Public)));
                     return true;
                 }
                 catch
                 {
-                    Debug.LogError("Render Mod: Failed to patch ScoreSaber replay button!");
+                    Debug.LogError("Render Mod: Failed to patch LocalLeaderboard replay button!");
                 }
             }
             return false;
