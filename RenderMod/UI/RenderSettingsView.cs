@@ -59,13 +59,13 @@ namespace RenderMod.UI
                 {
                     case "16:9": ReplayRenderSettings.AspectRatio = "16:9"; ReplayRenderSettings.Width = 1920; ReplayRenderSettings.Height = 1080; break;
                     case "20:9": ReplayRenderSettings.AspectRatio = "20:9"; ReplayRenderSettings.Width = 2400; ReplayRenderSettings.Height = 1080; break;
-                    case "21:9": ReplayRenderSettings.AspectRatio = "21:9"; ReplayRenderSettings.Width = 2520; ReplayRenderSettings.Height = 1080; break;
+                    case "21:9": ReplayRenderSettings.AspectRatio = "21:9"; ReplayRenderSettings.Width = 2560; ReplayRenderSettings.Height = 1080; break;
                     case "32:9": ReplayRenderSettings.AspectRatio = "32:9"; ReplayRenderSettings.Width = 3840; ReplayRenderSettings.Height = 1080; break;
                     case "3:2": ReplayRenderSettings.AspectRatio = "3:2"; ReplayRenderSettings.Width = 1620; ReplayRenderSettings.Height = 1080; break;
                     case "4:3": ReplayRenderSettings.AspectRatio = "4:3"; ReplayRenderSettings.Width = 1440; ReplayRenderSettings.Height = 1080; break;
                     case "9:16": ReplayRenderSettings.AspectRatio = "9:16"; ReplayRenderSettings.Width = 1080; ReplayRenderSettings.Height = 1920; break;
                     case "9:20": ReplayRenderSettings.AspectRatio = "9:20"; ReplayRenderSettings.Width = 1080; ReplayRenderSettings.Height = 2400; break;
-                    case "9:21": ReplayRenderSettings.AspectRatio = "9:21"; ReplayRenderSettings.Width = 1080; ReplayRenderSettings.Height = 2520; break;
+                    case "9:21": ReplayRenderSettings.AspectRatio = "9:21"; ReplayRenderSettings.Width = 1080; ReplayRenderSettings.Height = 2560; break;
                     case "9:32": ReplayRenderSettings.AspectRatio = "9:32"; ReplayRenderSettings.Width = 1080; ReplayRenderSettings.Height = 3840; break;
                     case "2:3": ReplayRenderSettings.AspectRatio = "2:3"; ReplayRenderSettings.Width = 1080; ReplayRenderSettings.Height = 1620; break;
                     case "3:4": ReplayRenderSettings.AspectRatio = "3:4"; ReplayRenderSettings.Width = 1080; ReplayRenderSettings.Height = 1440; break;
@@ -122,9 +122,9 @@ namespace RenderMod.UI
                         case 840 when ReplayRenderSettings.Height == 360: return "360p";
                         case 1120 when ReplayRenderSettings.Height == 480: return "480p";
                         case 1680 when ReplayRenderSettings.Height == 720: return "720p";
-                        case 2520 when ReplayRenderSettings.Height == 1080: return "1080p";
-                        case 3360 when ReplayRenderSettings.Height == 1440: return "1440p";
-                        case 5040 when ReplayRenderSettings.Height == 2160: return "4K";
+                        case 2560 when ReplayRenderSettings.Height == 1080: return "1080p";
+                        case 3440 when ReplayRenderSettings.Height == 1440: return "1440p";
+                        case 5120 when ReplayRenderSettings.Height == 2160: return "4K";
                         case 10080 when ReplayRenderSettings.Height == 4320: return "8K";
                         default:
                             _log.Warn($"Unknown resolution setting: {ReplayRenderSettings.Width}x{ReplayRenderSettings.Height}, defaulting to 1080p");
@@ -202,8 +202,8 @@ namespace RenderMod.UI
                         case 360 when ReplayRenderSettings.Height == 800: return "360p";
                         case 480 when ReplayRenderSettings.Height == 1066: return "480p";
                         case 720 when ReplayRenderSettings.Height == 1600: return "720p";
-                        case 1080 when ReplayRenderSettings.Height == 3200: return "1080p";
-                        case 1440 when ReplayRenderSettings.Height == 1440: return "1440p";
+                        case 1080 when ReplayRenderSettings.Height == 2400: return "1080p";
+                        case 1440 when ReplayRenderSettings.Height == 3200: return "1440p";
                         case 2160 when ReplayRenderSettings.Height == 4800: return "4K";
                         case 4320 when ReplayRenderSettings.Height == 9600: return "8K";
                         default:
@@ -218,9 +218,9 @@ namespace RenderMod.UI
                         case 360 when ReplayRenderSettings.Height == 840: return "360p";
                         case 480 when ReplayRenderSettings.Height == 1120: return "480p";
                         case 720 when ReplayRenderSettings.Height == 1680: return "720p";
-                        case 1080 when ReplayRenderSettings.Height == 2520: return "1080p";
-                        case 1440 when ReplayRenderSettings.Height == 3360: return "1440p";
-                        case 2160 when ReplayRenderSettings.Height == 5040: return "4K";
+                        case 1080 when ReplayRenderSettings.Height == 2560: return "1080p";
+                        case 1440 when ReplayRenderSettings.Height == 3440: return "1440p";
+                        case 2160 when ReplayRenderSettings.Height == 5120: return "4K";
                         case 4320 when ReplayRenderSettings.Height == 10080: return "8K";
                         default:
                             _log.Warn($"Unknown resolution setting: {ReplayRenderSettings.Width}x{ReplayRenderSettings.Height}, defaulting to 1080p");
@@ -327,13 +327,13 @@ namespace RenderMod.UI
                         case "360p": ReplayRenderSettings.Width = 840; ReplayRenderSettings.Height = 360; break;
                         case "480p": ReplayRenderSettings.Width = 1120; ReplayRenderSettings.Height = 480; break;
                         case "720p": ReplayRenderSettings.Width = 1680; ReplayRenderSettings.Height = 720; break;
-                        case "1080p": ReplayRenderSettings.Width = 2520; ReplayRenderSettings.Height = 1080; break;
-                        case "1440p": ReplayRenderSettings.Width = 3360; ReplayRenderSettings.Height = 1440; break;
-                        case "4K": ReplayRenderSettings.Width = 5040; ReplayRenderSettings.Height = 2160; break;
+                        case "1080p": ReplayRenderSettings.Width = 2560; ReplayRenderSettings.Height = 1080; break;
+                        case "1440p": ReplayRenderSettings.Width = 3440; ReplayRenderSettings.Height = 1440; break;
+                        case "4K": ReplayRenderSettings.Width = 5120; ReplayRenderSettings.Height = 2160; break;
                         case "8K": ReplayRenderSettings.Width = 10080; ReplayRenderSettings.Height = 4320; break;;
                         default:
                             _log.Warn($"Unknown resolution option: {value}, defaulting to 1080p");
-                            ReplayRenderSettings.Width = 2520;
+                            ReplayRenderSettings.Width = 2560;
                             ReplayRenderSettings.Height = 1080;
                             break;
                     }
@@ -447,14 +447,14 @@ namespace RenderMod.UI
                         case "360p": ReplayRenderSettings.Width = 360; ReplayRenderSettings.Height = 840; break;
                         case "480p": ReplayRenderSettings.Width = 480; ReplayRenderSettings.Height = 1120; break;
                         case "720p": ReplayRenderSettings.Width = 720; ReplayRenderSettings.Height = 1680; break;
-                        case "1080p": ReplayRenderSettings.Width = 1080; ReplayRenderSettings.Height = 2520; break;
-                        case "1440p": ReplayRenderSettings.Width = 1440; ReplayRenderSettings.Height = 3360; break;
-                        case "4K": ReplayRenderSettings.Width = 2160; ReplayRenderSettings.Height = 5040; break;
+                        case "1080p": ReplayRenderSettings.Width = 1080; ReplayRenderSettings.Height = 2560; break;
+                        case "1440p": ReplayRenderSettings.Width = 1440; ReplayRenderSettings.Height = 3440; break;
+                        case "4K": ReplayRenderSettings.Width = 2160; ReplayRenderSettings.Height = 5120; break;
                         case "8K": ReplayRenderSettings.Width = 4320; ReplayRenderSettings.Height = 10080; break;;
                         default:
                             _log.Warn($"Unknown resolution option: {value}, defaulting to 1080p");
                             ReplayRenderSettings.Width = 1080;
-                            ReplayRenderSettings.Height = 2520;
+                            ReplayRenderSettings.Height = 2560;
                             break;
                     }
                     ReplayRenderSettings.SaveSettings();
@@ -505,7 +505,7 @@ namespace RenderMod.UI
                     switch (value)
                     {
                         case "360p": ReplayRenderSettings.Width = 360; ReplayRenderSettings.Height = 480; break;
-                        case "480p": ReplayRenderSettings.Width = 640; ReplayRenderSettings.Height = 640; break;
+                        case "480p": ReplayRenderSettings.Width = 480; ReplayRenderSettings.Height = 640; break;
                         case "720p": ReplayRenderSettings.Width = 720; ReplayRenderSettings.Height = 960; break;
                         case "1080p": ReplayRenderSettings.Width = 1080; ReplayRenderSettings.Height = 1440; break;
                         case "1440p": ReplayRenderSettings.Width = 1440; ReplayRenderSettings.Height = 1920; break;
